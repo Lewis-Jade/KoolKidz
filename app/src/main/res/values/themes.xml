@@ -1,15 +1,23 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-
-        <style name="CalcKey">
-            <item name="android:layout_width">0dp</item>
-            <item name="android:layout_height">72dp</item>
-            <item name="android:textSize">22sp</item>
-            <item name="android:layout_rowWeight">1</item>
-            <item name="android:layout_columnWeight">1</item>
-            <item name="android:background">@android:drawable/btn_default</item>
-        </style>
-
+    <style name="Base.Theme.Child_calculator" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorSecondary">@color/soft_green</item>
+        <item name="android:statusBarColor">@color/primary_dark_blue</item>
+    </style>
 
     <style name="Theme.Child_calculator" parent="Base.Theme.Child_calculator" />
+
+    <style name="CalcButtonStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_gravity">fill</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:fontFamily">@font/fuzzybubbles_bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:background">@drawable/btb_background</item>
+        <item name="android:elevation">4dp</item>
+    </style>
 </resources>

@@ -3,15 +3,17 @@ package com.example.child_calculator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -32,7 +34,6 @@ public class Results extends AppCompatActivity {
             return insets;
         });
 
-        // Get data from Play activity
         Intent intent = getIntent();
         int score = intent.getIntExtra("SCORE", 0);
         int total = intent.getIntExtra("TOTAL", 10);
@@ -40,61 +41,61 @@ public class Results extends AppCompatActivity {
         ArrayList<String> correctAnswers = intent.getStringArrayListExtra("ANSWERS");
         ArrayList<String> userAnswers = intent.getStringArrayListExtra("USER_ANSWERS");
 
-        // Grade TextView
         TextView passText = findViewById(R.id.pass);
-        float percent = (score * 100f) / total;
+        TextView scoreValue = findViewById(R.id.tv_score_value);
+        ProgressBar progressBar = findViewById(R.id.result_progress);
+        LinearLayout questionContainer = findViewById(R.id.question_list_container);
+
+        float percent = (total > 0) ? (score * 100f) / total : 0;
         String gradeMessage;
         if (percent >= 90) gradeMessage = "Excellent!";
-        else if (percent >= 70) gradeMessage = "Good Job!";
-        else if (percent >= 50) gradeMessage = "Not Bad!";
-        else gradeMessage = "Try Again!";
-        passText.setText(gradeMessage + " You scored " + score + "/" + total);
+        else if (percent >= 70) gradeMessage = "Great Job!";
+        else if (percent >= 50) gradeMessage = "Well Done!";
+        else gradeMessage = "Keep Practicing!";
 
-        // ProgressBar animation
-        ProgressBar progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
-        progressBar.setMax(total);
-        progressBar.setProgress(0);
-        progressBar.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, 50));
-        ((LinearLayout) findViewById(R.id.main)).addView(progressBar, 1);
+        passText.setText(gradeMessage);
+        scoreValue.setText(score + " / " + total);
 
-        ObjectAnimator animation = ObjectAnimator.ofInt(progressBar, "progress", 0, score);
+        // Animate progress bar
+        progressBar.setMax(total * 100);
+        ObjectAnimator animation = ObjectAnimator.ofInt(progressBar, "progress", 0, score * 100);
         animation.setDuration(1500);
+        animation.setInterpolator(new DecelerateInterpolator());
         animation.start();
 
-        // ScrollView for questions
-        ScrollView scrollView = new ScrollView(this);
-        LinearLayout questionLayout = new LinearLayout(this);
-        questionLayout.setOrientation(LinearLayout.VERTICAL);
-        scrollView.addView(questionLayout);
+        Typeface kidFont = ResourcesCompat.getFont(this, R.font.fuzzybubbles_bold);
 
-        // Display each question and correct answer, highlighting wrong answers
-        for (int i = 0; i < questions.size(); i++) {
-            TextView tv = new TextView(this);
-            String displayText = (i + 1) + ". " + questions.get(i)
-                    + " = " + correctAnswers.get(i)
-                    + " | Your answer: " + userAnswers.get(i);
-            tv.setText(displayText);
-            tv.setTextSize(22f);
-            tv.setPadding(10, 10, 10, 10);
+        // Populate question list
+        if (questions != null && correctAnswers != null && userAnswers != null) {
+            for (int i = 0; i < questions.size(); i++) {
+                TextView tv = new TextView(this);
+                String userAns = userAnswers.size() > i ? userAnswers.get(i) : "?";
+                String correctAns = correctAnswers.get(i);
+                
+                String displayText = (i + 1) + ". " + questions.get(i) + " = " + correctAns;
+                if (!userAns.equals(correctAns)) {
+                    displayText += " (You: " + userAns + ")";
+                    tv.setTextColor(Color.parseColor("#E57373")); // Soft red
+                } else {
+                    tv.setTextColor(Color.parseColor("#81C784")); // Soft green
+                }
 
-            // Color code based on correctness
-            if (correctAnswers.get(i).equals(userAnswers.get(i))) {
-                tv.setTextColor(Color.parseColor("#388E3C")); // Green for correct
-            } else {
-                tv.setTextColor(Color.parseColor("#D32F2F")); // Red for wrong
+                tv.setText(displayText);
+                tv.setTextSize(20f);
+                tv.setPadding(0, 12, 0, 12);
+                if (kidFont != null) tv.setTypeface(kidFont);
+                questionContainer.addView(tv);
             }
-
-            questionLayout.addView(tv);
         }
 
-        ((LinearLayout) findViewById(R.id.main)).addView(scrollView);
-
-        // Back and Done buttons
         Button back = findViewById(R.id.back);
-        back.setOnClickListener(v -> finish());
+        back.setOnClickListener(v -> {
+            Intent playIntent = new Intent(Results.this, Play.class);
+            // Optional: pass the same mode if you want to keep the difficulty
+            startActivity(playIntent);
+            finish();
+        });
 
-        Button done = findViewById(R.id.done);
-        done.setOnClickListener(v -> finish());
+        findViewById(R.id.done).setOnClickListener(v -> finish());
     }
 }

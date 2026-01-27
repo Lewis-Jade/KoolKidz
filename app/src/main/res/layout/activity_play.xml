@@ -1,387 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@drawable/main_background"
+    tools:context=".Play">
 
- <GridLayout
-     android:id="@+id/answer"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:rowCount="1"
-     android:columnCount="2"
-     app:layout_constraintTop_toTopOf="parent"
-     >
-     <VideoView
-         android:id="@+id/animplay"
-         android:layout_height="match_parent"
-         android:layout_width="wrap_content"
-         android:scaleType="centerCrop"/>
+    <!-- Top Display Area -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/display_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-     <TextView
-         android:id="@+id/tvcalculation"
-         android:layout_width="0dp"
-         android:layout_height="match_parent"
-         android:text="@string/calculation"
-         android:textSize="28sp"
-         android:textStyle="bold"
-         android:gravity="center"
-         android:layout_columnWeight="2"
-         />
-     <EditText
-         android:id="@+id/input"
-         android:layout_width="0dp"
-         android:layout_columnWeight="1"
-         android:layout_height="match_parent"
-         android:hint="waiting"
-         android:textSize="20sp"
-         android:gravity="center"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btb_background"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-         />
+            <TextView
+                android:id="@+id/tvcalculation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fuzzybubbles_bold"
+                android:text="7 + 5 ="
+                android:textColor="@color/white"
+                android:textSize="36sp" />
 
+            <EditText
+                android:id="@+id/input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/display_bg"
+                android:enabled="false"
+                android:fontFamily="@font/fuzzybubbles_bold"
+                android:gravity="center"
+                android:hint="?"
+                android:inputType="none"
+                android:padding="12dp"
+                android:textColor="@color/accent_orange"
+                android:textSize="32sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
- </GridLayout>
-
-
-
-    <GridLayout
+    <!-- Simplified Number Keypad -->
+    <androidx.gridlayout.widget.GridLayout
         android:id="@+id/grid_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginVertical="8dp"
+        app:columnCount="3"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_actions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/display_card"
+        app:rowCount="4">
+
+        <android.widget.Button
+            android:id="@+id/seven"
+            style="@style/CalcButtonStyle"
+            android:text="@string/seven"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <android.widget.Button
+            android:id="@+id/eight"
+            style="@style/CalcButtonStyle"
+            android:text="@string/eight"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <android.widget.Button
+            android:id="@+id/nine"
+            style="@style/CalcButtonStyle"
+            android:text="@string/nine"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <android.widget.Button
+            android:id="@+id/four"
+            style="@style/CalcButtonStyle"
+            android:text="@string/four"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <android.widget.Button
+            android:id="@+id/five"
+            style="@style/CalcButtonStyle"
+            android:text="@string/five"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <android.widget.Button
+            android:id="@+id/six"
+            style="@style/CalcButtonStyle"
+            android:text="@string/six"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <android.widget.Button
+            android:id="@+id/one"
+            style="@style/CalcButtonStyle"
+            android:text="@string/one"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <android.widget.Button
+            android:id="@+id/two"
+            style="@style/CalcButtonStyle"
+            android:text="@string/two"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <android.widget.Button
+            android:id="@+id/three"
+            style="@style/CalcButtonStyle"
+            android:text="@string/three"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <android.widget.Button
+            android:id="@+id/zero"
+            style="@style/CalcButtonStyle"
+            android:text="@string/zero"
+            app:layout_columnSpan="2"
+            app:layout_columnWeight="2"
+            app:layout_rowWeight="1" />
+
+        <android.widget.Button
+            android:id="@+id/point"
+            style="@style/CalcButtonStyle"
+            android:text="@string/point"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+    </androidx.gridlayout.widget.GridLayout>
+
+    <!-- Bottom Actions -->
+    <LinearLayout
+        android:id="@+id/bottom_actions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="4"
-       android:background="#ffee00"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        android:rowCount="6"
-        android:layout_marginTop="200dp"
-        app:layout_constraintTop_toTopOf="@id/answer"
-        >
+        <android.widget.Button
+            android:id="@+id/back_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/btb_background"
+            android:backgroundTint="#D32F2F"
+            android:fontFamily="@font/fuzzybubbles_bold"
+            android:paddingVertical="12dp"
+            android:text="@string/back"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
-<Button
-    android:id="@+id/delete"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_gravity="fill"
-    android:text="@string/delete"
-    android:textAlignment="center"
-    android:textSize="20sp"
-    android:textStyle="bold"
-    android:padding="10dp"
-    android:background="@drawable/buttons_bg"
-    android:translationZ="5dp"
-     android:elevation="5dp"
-    android:layout_margin="10dp"
-    android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/cancel"
+        <android.widget.Button
+            android:id="@+id/submit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/cancel"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-
-
-        <Button
-            android:id="@+id/division"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/division"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/multiplication"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/multiplication"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/seven"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/seven"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/eight"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/eight"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/nine"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/nine"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/subtraction"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/subtract"
-            android:textAlignment="center"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/four"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/four"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/five"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/five"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/six"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/six"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-
-        <Button
-            android:id="@+id/addition"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/addition"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/one"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/one"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/two"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/two"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/three"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/three"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/equal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/equal"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_rowSpan="2"
-            android:layout_columnWeight="1"/>
-
-        <Button
-            android:id="@+id/zero"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/zero"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnSpan="2"
-            android:layout_columnWeight="1"/>
-        <Button
-            android:id="@+id/point"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:text="@string/point"
-            android:gravity="center"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:background="@drawable/buttons_bg"
-            android:translationZ="5dp"
-            android:layout_margin="10dp"
-            android:layout_columnWeight="1"/>
-
-    </GridLayout>
-
-
-    <Button
-        android:id="@+id/back_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/back"
-        android:gravity="center"
-        android:textSize="30sp"
-
-        android:textStyle="bold"
-        android:padding="5dp"
-        android:background="@drawable/buttons_bg"
-        android:textColor="@color/white"
-        android:backgroundTint="#ff0000"
-        android:layout_marginTop="4dp"
-        android:translationZ="5dp"
-        app:layout_constraintTop_toBottomOf="@id/grid_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/submit"
-        />
-    <Button
-        android:id="@+id/submit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/submit"
-        android:gravity="center"
-        android:textSize="25sp"
-
-        android:textStyle="bold"
-        android:padding="10dp"
-        android:background="@drawable/buttons_bg"
-        android:textColor="@color/white"
-        android:backgroundTint="#201eff"
-        android:layout_marginTop="4dp"
-        android:translationZ="5dp"
-        app:layout_constraintTop_toBottomOf="@id/grid_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/back_btn"
-        android:layout_marginStart="10dp"
-
-        />
-
+            android:layout_marginStart="8dp"
+            android:layout_weight="2"
+            android:background="@drawable/btb_background"
+            android:backgroundTint="#388E3C"
+            android:fontFamily="@font/fuzzybubbles_bold"
+            android:paddingVertical="12dp"
+            android:text="@string/submit"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

@@ -1,11 +1,14 @@
 package com.example.child_calculator;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +21,9 @@ import java.util.Random;
 
 public class Play extends AppCompatActivity {
 
-    VideoView bgAnimation;
+    TextView tvCalculation;
     EditText input;
+    View displayCard;
 
     int questionCount = 0;
     int totalQuestions = 10;
@@ -30,9 +34,7 @@ public class Play extends AppCompatActivity {
 
     ArrayList<String> questionsList = new ArrayList<>();
     ArrayList<String> answersList = new ArrayList<>();
-
-    double firstValue = 0;
-    String operator = "";
+    ArrayList<String> userAnswersList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +48,10 @@ public class Play extends AppCompatActivity {
             return insets;
         });
 
-        // Video background
-        bgAnimation = findViewById(R.id.animplay);
-        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.animplay);
-        bgAnimation.setVideoURI(videoUri);
-        bgAnimation.start();
-        bgAnimation.setOnPreparedListener(mp -> mp.setLooping(true));
-
-        // Input
+        tvCalculation = findViewById(R.id.tvcalculation);
         input = findViewById(R.id.input);
+        displayCard = findViewById(R.id.display_card);
 
-        // Number buttons
         setNumberClick(R.id.zero, "0");
         setNumberClick(R.id.one, "1");
         setNumberClick(R.id.two, "2");
@@ -67,59 +62,60 @@ public class Play extends AppCompatActivity {
         setNumberClick(R.id.seven, "7");
         setNumberClick(R.id.eight, "8");
         setNumberClick(R.id.nine, "9");
+        setNumberClick(R.id.point, ".");
 
-        // Operators
-        findViewById(R.id.addition).setOnClickListener(v -> setOperator("+"));
-        findViewById(R.id.subtraction).setOnClickListener(v -> setOperator("-"));
-        findViewById(R.id.multiplication).setOnClickListener(v -> setOperator("*"));
-        findViewById(R.id.division).setOnClickListener(v -> setOperator("/"));
+        findViewById(R.id.submit).setOnClickListener(v -> checkAnswer());
+        findViewById(R.id.back_btn).setOnClickListener(v -> finish());
 
-        // Equals
-        findViewById(R.id.equal).setOnClickListener(v -> checkAnswer());
-
-        // Delete
-        findViewById(R.id.delete).setOnClickListener(v -> {
-            String text = input.getText().toString();
-            if (!text.isEmpty()) input.setText(text.substring(0, text.length() - 1));
-        });
-
-        // Cancel
-        findViewById(R.id.cancel).setOnClickListener(v -> {
-            input.setText("");
-            firstValue = 0;
-            operator = "";
-        });
-
-        // Start first question
         nextQuestion();
     }
 
     private void setNumberClick(int id, String value) {
-        findViewById(id).setOnClickListener(v -> input.append(value));
+        View btn = findViewById(id);
+        if (btn != null) {
+            btn.setOnClickListener(v -> input.append(value));
+        }
     }
 
-    private void setOperator(String op) {
-        if (!input.getText().toString().isEmpty()) {
-            firstValue = Double.parseDouble(input.getText().toString());
-            operator = op;
-            input.setText("");
+    private void playSound(int resId) {
+        MediaPlayer mp = MediaPlayer.create(this, resId);
+        if (mp != null) {
+            mp.setOnCompletionListener(MediaPlayer::release);
+            mp.start();
         }
     }
 
     private void checkAnswer() {
-        if (input.getText().toString().isEmpty()) return;
-
-        double answer = Double.parseDouble(input.getText().toString());
-        if (Math.abs(answer - currentAnswer) < 0.001) { // correct
-            score++;
-            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Wrong! Answer: " + currentAnswer, Toast.LENGTH_SHORT).show();
+        String userText = input.getText().toString();
+        if (userText.isEmpty()) {
+            Toast.makeText(this, "Enter an answer!", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        // Store question and correct answer
+        double userAnswer;
+        try {
+            userAnswer = Double.parseDouble(userText);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Invalid number!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         questionsList.add(currentQuestion);
         answersList.add(String.valueOf(currentAnswer));
+        userAnswersList.add(userText);
+
+        if (Math.abs(userAnswer - currentAnswer) < 0.01) {
+            score++;
+            playSound(R.raw.levelup_sound); // Play "Success" sound
+            Animation bounce = AnimationUtils.loadAnimation(this, R.anim.bounce);
+            displayCard.startAnimation(bounce);
+            Toast.makeText(this, "Awesome! Correct!", Toast.LENGTH_SHORT).show();
+        } else {
+            playSound(R.raw.wrong_sound); // Play "Wrong" sound
+            Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+            displayCard.startAnimation(shake);
+            Toast.makeText(this, "Oops! The answer was " + currentAnswer, Toast.LENGTH_SHORT).show();
+        }
 
         questionCount++;
         if (questionCount < totalQuestions) {
@@ -127,47 +123,37 @@ public class Play extends AppCompatActivity {
         } else {
             showResults();
         }
-
         input.setText("");
-        operator = "";
-        firstValue = 0;
     }
 
     private void nextQuestion() {
         Random rand = new Random();
         int a = rand.nextInt(10) + 1;
         int b = rand.nextInt(10) + 1;
-        int c = rand.nextInt(10) + 1;
-        char[] ops = {'+', '-', '*', '/'};
-        char op1 = ops[rand.nextInt(4)];
-        char op2 = ops[rand.nextInt(4)];
-
-        currentQuestion = a + " " + op1 + " " + b + " " + op2 + " " + c;
-        currentAnswer = evaluateExpression(a, op1, b, op2, c);
-
-        Toast.makeText(this, "Question " + (questionCount + 1) + ": " + currentQuestion, Toast.LENGTH_LONG).show();
-    }
-
-    private double evaluateExpression(int a, char op1, int b, char op2, int c) {
-        double first;
-        switch (op1) {
-            case '+': first = a + b; break;
-            case '-': first = a - b; break;
-            case '*': first = a * b; break;
-            case '/': first = b != 0 ? a / (double)b : 0; break;
-            default: first = 0;
+        
+        int opType = rand.nextInt(4);
+        switch (opType) {
+            case 0:
+                currentQuestion = a + " + " + b;
+                currentAnswer = a + b;
+                break;
+            case 1:
+                if (a < b) { int temp = a; a = b; b = temp; }
+                currentQuestion = a + " - " + b;
+                currentAnswer = a - b;
+                break;
+            case 2:
+                currentQuestion = a + " × " + b;
+                currentAnswer = a * b;
+                break;
+            case 3:
+                currentAnswer = a;
+                a = a * b;
+                currentQuestion = a + " ÷ " + b;
+                break;
         }
 
-        double result;
-        switch (op2) {
-            case '+': result = first + c; break;
-            case '-': result = first - c; break;
-            case '*': result = first * c; break;
-            case '/': result = c != 0 ? first / (double)c : 0; break;
-            default: result = first;
-        }
-
-        return result;
+        tvCalculation.setText(currentQuestion + " =");
     }
 
     private void showResults() {
@@ -176,6 +162,7 @@ public class Play extends AppCompatActivity {
         intent.putExtra("TOTAL", totalQuestions);
         intent.putStringArrayListExtra("QUESTIONS", questionsList);
         intent.putStringArrayListExtra("ANSWERS", answersList);
+        intent.putStringArrayListExtra("USER_ANSWERS", userAnswersList);
         startActivity(intent);
         finish();
     }

@@ -5,47 +5,111 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/main_background"
     tools:context=".Results">
-    <TextView
-        android:id="@+id/pass"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/result_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fuzzybubbles_bold"
+                android:text="Excellent!"
+                android:textColor="@color/soft_green"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/result_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginTop="16dp"
+                android:progressDrawable="@android:drawable/progress_horizontal"
+                android:progressTint="@color/accent_orange" />
+
+            <TextView
+                android:id="@+id/tv_score_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/fuzzybubbles_bold"
+                android:text="10/10"
+                android:textColor="@color/primary_dark_blue"
+                android:textSize="48sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:id="@+id/scroll_results"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:background="#CCFFFFFF"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_card">
+
+        <LinearLayout
+            android:id="@+id/question_list_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/pass"
-        android:textStyle="bold"
-        android:textSize="28sp"
-        android:gravity="center"
-      android:fontFamily="@font/fuzzybubbles_bold"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <Button
-        android:id="@+id/back"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingVertical="10dp"
-        android:text="@string/back"
-        android:fontFamily="@font/fuzzybubbles_bold"
-        android:textColor="@color/black"
-        android:textSize="35sp"
-        android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@+id/pass"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/done"
-        android:gravity="center"
-        />
+        <Button
+            android:id="@+id/back"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/kid_button_bg"
+            android:backgroundTint="#E57373"
+            android:fontFamily="@font/fuzzybubbles_bold"
+            android:text="@string/back"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/done"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/done"
-        android:textSize="35sp"
-        android:paddingVertical="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/pass"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/back"
-        android:gravity="center"
-        android:fontFamily="@font/fuzzybubbles_bold"
-        />
+        <Button
+            android:id="@+id/done"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/kid_button_bg"
+            android:backgroundTint="@color/soft_green"
+            android:fontFamily="@font/fuzzybubbles_bold"
+            android:text="@string/done"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

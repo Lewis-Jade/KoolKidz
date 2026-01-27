@@ -2,5 +2,19 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="playime">#00ff00</color>
+    <color name="playime">#FF00FF00</color>
+
+    <color name="primary_blue">#FF4FC3F7</color>
+    <color name="primary_dark_blue">#FF039BE5</color>
+    <color name="accent_orange">#FFFFB74D</color>
+    <color name="soft_green">#FF81C784</color>
+    <color name="soft_pink">#FFF06292</color>
+    <color name="soft_yellow">#FFFFF176</color>
+    <color name="soft_purple">#FFBA68C8</color>
+    <color name="bg_gradient_start">#FFE0F7FA</color>
+    <color name="bg_gradient_end">#FFB2EBF2</color>
+
+    <color name="button_easy">#FF81C784</color>
+    <color name="button_medium">#FFFFB74D</color>
+    <color name="button_hard">#FFE57373</color>
 </resources>
