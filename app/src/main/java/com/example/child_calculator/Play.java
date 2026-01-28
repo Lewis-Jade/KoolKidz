@@ -61,17 +61,20 @@ public class Play extends AppCompatActivity {
         input = findViewById(R.id.input);
         displayCard = findViewById(R.id.display_card);
 
-        // Set difficulty text and color
+        // Set difficulty text, color and total questions
         tvDifficultyDisplay.setText(mode);
         switch (mode) {
             case "EASY":
-                tvDifficultyDisplay.setTextColor(Color.parseColor("#FF81C784")); // Soft Green
+                tvDifficultyDisplay.setTextColor(Color.parseColor("#FF81C784"));
+                totalQuestions = 10;
                 break;
             case "MEDIUM":
-                tvDifficultyDisplay.setTextColor(Color.parseColor("#FFFFB74D")); // Accent Orange
+                tvDifficultyDisplay.setTextColor(Color.parseColor("#FFFFB74D"));
+                totalQuestions = 15;
                 break;
             case "HARD":
-                tvDifficultyDisplay.setTextColor(Color.parseColor("#FFE57373")); // Soft Red
+                tvDifficultyDisplay.setTextColor(Color.parseColor("#FFE57373"));
+                totalQuestions = 20;
                 break;
         }
 
@@ -152,10 +155,54 @@ public class Play extends AppCompatActivity {
 
     private void nextQuestion() {
         Random rand = new Random();
-        int a = rand.nextInt(10) + 1;
-        int b = rand.nextInt(10) + 1;
+        int a, b, c;
+        int opType1, opType2;
         
-        int opType = rand.nextInt(4);
+        switch (mode) {
+            case "HARD":
+                // 3 operands for Hard mode
+                a = rand.nextInt(20) + 1;
+                b = rand.nextInt(15) + 1;
+                c = rand.nextInt(10) + 1;
+                opType1 = rand.nextInt(2); // + or - for simplicity in chaining
+                opType2 = rand.nextInt(2);
+                
+                String sOp1 = (opType1 == 0) ? " + " : " - ";
+                String sOp2 = (opType2 == 0) ? " + " : " - ";
+                
+                currentQuestion = a + sOp1 + b + sOp2 + c;
+                currentAnswer = (opType1 == 0) ? (a + b) : (a - b);
+                currentAnswer = (opType2 == 0) ? (currentAnswer + c) : (currentAnswer - c);
+                break;
+                
+            case "MEDIUM":
+                // Slightly harder numbers for Medium mode
+                a = rand.nextInt(25) + 5;
+                b = rand.nextInt(20) + 5;
+                opType1 = rand.nextInt(4);
+                generateTwoOperandQuestion(a, b, opType1);
+                break;
+                
+            default: // EASY
+                a = rand.nextInt(10) + 1;
+                b = rand.nextInt(10) + 1;
+                opType1 = rand.nextInt(2); // Only + and - for Easy
+                generateTwoOperandQuestion(a, b, opType1);
+                break;
+        }
+
+        tvCalculation.setText(currentQuestion + " =");
+        tvQuestionCounter.setText("Question: " + (questionCount + 1) + " / " + totalQuestions);
+        
+        // Randomly trigger a small "engaging" animation on the whole screen background elements
+        if (rand.nextBoolean()) {
+            Animation pulse = AnimationUtils.loadAnimation(this, R.anim.bounce); // Using bounce as a pulse
+            pulse.setDuration(1000);
+            tvDifficultyDisplay.startAnimation(pulse);
+        }
+    }
+
+    private void generateTwoOperandQuestion(int a, int b, int opType) {
         switch (opType) {
             case 0:
                 currentQuestion = a + " + " + b;
@@ -176,9 +223,6 @@ public class Play extends AppCompatActivity {
                 currentQuestion = a + " ÷ " + b;
                 break;
         }
-
-        tvCalculation.setText(currentQuestion + " =");
-        tvQuestionCounter.setText("Question: " + (questionCount + 1) + " / " + totalQuestions);
     }
 
     private void showResults() {

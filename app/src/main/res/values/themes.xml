@@ -20,4 +20,9 @@
         <item name="android:background">@drawable/btb_background</item>
         <item name="android:elevation">4dp</item>
     </style>
+
+    <style name="KidDialogTheme" parent="Theme.Material3.DayNight.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
 </resources>

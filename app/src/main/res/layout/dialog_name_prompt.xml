@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/fun_3d_cartoon_teenage_boy"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hi there! What's your name?"
+            android:fontFamily="@font/fuzzybubbles_bold"
+            android:textColor="@color/title_purple"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/et_dialog_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/display_bg"
+            android:padding="16dp"
+            android:hint="Enter your name..."
+            android:fontFamily="@font/fuzzybubbles_bold"
+            android:gravity="center"
+            android:inputType="textCapWords"
+            android:textColor="@color/primary_dark_blue"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/btn_dialog_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/kid_button_bg"
+            android:backgroundTint="@color/soft_green"
+            android:text="Let's Play!"
+            android:textColor="@color/white"
+            android:fontFamily="@font/fuzzybubbles_bold"
+            android:textSize="20sp"
+            android:padding="12dp"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

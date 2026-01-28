@@ -10,7 +10,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -21,12 +22,12 @@
                 android:id="@+id/tv_playtime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="64dp"
                 android:fontFamily="@font/fuzzybubbles_bold"
                 android:padding="20dp"
                 android:text="@string/play_time"
                 android:textColor="@color/title_purple"
-                android:textSize="44sp"
+                android:textSize="48sp"
                 android:textStyle="bold"
                 android:shadowColor="#40000000"
                 android:shadowDx="3"
@@ -36,42 +37,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/et_player_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/display_bg"
-                android:fontFamily="@font/fuzzybubbles_bold"
-                android:gravity="center"
-                android:hint="Enter your name"
-                android:padding="16dp"
-                android:textColor="@color/primary_dark_blue"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_playtime" />
-
             <TextView
                 android:id="@+id/tv_difficulty_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="48dp"
                 android:fontFamily="@font/fuzzybubbles_bold"
                 android:text="Choose Difficulty"
                 android:textColor="@color/title_purple"
-                android:textSize="24sp"
+                android:textSize="28sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_player_name" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_playtime" />
 
             <RadioGroup
                 android:id="@+id/rd_radio_group"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +66,7 @@
                     android:id="@+id/easy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="16dp"
                     android:background="@drawable/bg_easy"
                     android:button="@null"
                     android:elevation="4dp"
@@ -96,7 +81,7 @@
                     android:id="@+id/medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="16dp"
                     android:background="@drawable/bg_medium"
                     android:button="@null"
                     android:elevation="4dp"
@@ -111,7 +96,7 @@
                     android:id="@+id/hard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="32dp"
                     android:background="@drawable/bg_hard"
                     android:button="@null"
                     android:elevation="4dp"
@@ -129,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/rd_radio_group">
 
