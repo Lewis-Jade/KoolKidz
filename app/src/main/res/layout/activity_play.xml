@@ -8,6 +8,41 @@
     android:background="@drawable/main_background"
     tools:context=".Play">
 
+    <TextView
+        android:id="@+id/tv_difficulty_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/fuzzybubbles_bold"
+        android:text="EASY"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:shadowColor="#40000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_question_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/fuzzybubbles_bold"
+        android:text="Question: 1 / 10"
+        android:textColor="@color/primary_dark_blue"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:shadowColor="#40000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Top Display Area -->
     <androidx.cardview.widget.CardView
         android:id="@+id/display_card"
@@ -18,7 +53,7 @@
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tv_difficulty_display">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -162,7 +197,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@+id/tv_footer">
 
         <android.widget.Button
             android:id="@+id/back_btn"
@@ -192,5 +227,18 @@
             android:textColor="@color/white"
             android:textSize="22sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/fuzzybubbles_bold"
+        android:text="© by Mr.H4CK3R 2026"
+        android:textColor="@color/primary_dark_blue"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

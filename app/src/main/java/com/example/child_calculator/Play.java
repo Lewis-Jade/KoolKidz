@@ -1,6 +1,7 @@
 package com.example.child_calculator;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +21,7 @@ import java.util.Random;
 
 public class Play extends AppCompatActivity {
 
-    TextView tvCalculation;
+    TextView tvCalculation, tvDifficultyDisplay, tvQuestionCounter;
     EditText input;
     View displayCard;
 
@@ -31,6 +32,7 @@ public class Play extends AppCompatActivity {
     String currentQuestion;
     double currentAnswer;
     String playerName;
+    String mode;
 
     ArrayList<String> questionsList = new ArrayList<>();
     ArrayList<String> answersList = new ArrayList<>();
@@ -49,11 +51,29 @@ public class Play extends AppCompatActivity {
         });
 
         playerName = getIntent().getStringExtra("PLAYER_NAME");
+        mode = getIntent().getStringExtra("MODE");
         if (playerName == null) playerName = "Player";
+        if (mode == null) mode = "EASY";
 
         tvCalculation = findViewById(R.id.tvcalculation);
+        tvDifficultyDisplay = findViewById(R.id.tv_difficulty_display);
+        tvQuestionCounter = findViewById(R.id.tv_question_counter);
         input = findViewById(R.id.input);
         displayCard = findViewById(R.id.display_card);
+
+        // Set difficulty text and color
+        tvDifficultyDisplay.setText(mode);
+        switch (mode) {
+            case "EASY":
+                tvDifficultyDisplay.setTextColor(Color.parseColor("#FF81C784")); // Soft Green
+                break;
+            case "MEDIUM":
+                tvDifficultyDisplay.setTextColor(Color.parseColor("#FFFFB74D")); // Accent Orange
+                break;
+            case "HARD":
+                tvDifficultyDisplay.setTextColor(Color.parseColor("#FFE57373")); // Soft Red
+                break;
+        }
 
         setNumberClick(R.id.zero, "0");
         setNumberClick(R.id.one, "1");
@@ -158,6 +178,7 @@ public class Play extends AppCompatActivity {
         }
 
         tvCalculation.setText(currentQuestion + " =");
+        tvQuestionCounter.setText("Question: " + (questionCount + 1) + " / " + totalQuestions);
     }
 
     private void showResults() {
