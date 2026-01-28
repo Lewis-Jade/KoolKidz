@@ -11,6 +11,8 @@
     <color name="soft_pink">#FFF06292</color>
     <color name="soft_yellow">#FFFFF176</color>
     <color name="soft_purple">#FFBA68C8</color>
+    <color name="title_purple">#FF6A1B9A</color> <!-- Deep, vibrant purple for titles -->
+
     <color name="bg_gradient_start">#FFE0F7FA</color>
     <color name="bg_gradient_end">#FFB2EBF2</color>
 

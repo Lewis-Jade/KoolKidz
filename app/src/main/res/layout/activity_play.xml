@@ -66,7 +66,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/display_card"
-        app:rowCount="4">
+        app:rowCount="5">
 
         <android.widget.Button
             android:id="@+id/seven"
@@ -135,14 +135,21 @@
             android:id="@+id/zero"
             style="@style/CalcButtonStyle"
             android:text="@string/zero"
-            app:layout_columnSpan="2"
-            app:layout_columnWeight="2"
+            app:layout_columnWeight="1"
             app:layout_rowWeight="1" />
 
         <android.widget.Button
             android:id="@+id/point"
             style="@style/CalcButtonStyle"
             android:text="@string/point"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <android.widget.Button
+            android:id="@+id/clear_btn"
+            style="@style/CalcButtonStyle"
+            android:backgroundTint="#FF9800"
+            android:text="C"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1" />
 

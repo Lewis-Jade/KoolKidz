@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/custom_toast_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/kid_button_bg"
+    android:backgroundTint="@color/soft_yellow"
+    android:orientation="horizontal"
+    android:elevation="10dp"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/toast_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/fun_3d_cartoon_teenage_boy" />
+
+    <TextView
+        android:id="@+id/toast_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/fuzzybubbles_bold"
+        android:textColor="@color/primary_dark_blue"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+</LinearLayout>

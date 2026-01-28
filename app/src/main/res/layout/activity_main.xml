@@ -8,76 +8,159 @@
     android:background="@drawable/main_background"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tv_playtime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:fontFamily="@font/fuzzybubbles_bold"
-        android:padding="20dp"
-        android:text="@string/play_time"
-        android:textColor="@color/primary_dark_blue"
-        android:textSize="44sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <RadioGroup
-        android:id="@+id/rd_radio_group"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="48dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_playtime">
-
-        <RadioButton
-            android:id="@+id/easy"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_easy"
-            android:button="@null"
-            android:elevation="4dp"
-            android:fontFamily="@font/fuzzybubbles_bold"
-            android:gravity="center"
-            android:padding="20dp"
-            android:text="@string/easy"
-            android:textColor="@color/white"
-            android:textSize="28sp" />
+            android:paddingBottom="32dp">
 
-        <RadioButton
-            android:id="@+id/medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_medium"
-            android:button="@null"
-            android:elevation="4dp"
-            android:fontFamily="@font/fuzzybubbles_bold"
-            android:gravity="center"
-            android:padding="20dp"
-            android:text="@string/medium"
-            android:textColor="@color/white"
-            android:textSize="28sp" />
+            <TextView
+                android:id="@+id/tv_playtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:fontFamily="@font/fuzzybubbles_bold"
+                android:padding="20dp"
+                android:text="@string/play_time"
+                android:textColor="@color/title_purple"
+                android:textSize="44sp"
+                android:textStyle="bold"
+                android:shadowColor="#40000000"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioButton
-            android:id="@+id/hard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_hard"
-            android:button="@null"
-            android:elevation="4dp"
-            android:fontFamily="@font/fuzzybubbles_bold"
-            android:gravity="center"
-            android:padding="20dp"
-            android:text="@string/hard"
-            android:textColor="@color/white"
-            android:textSize="28sp" />
+            <EditText
+                android:id="@+id/et_player_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/display_bg"
+                android:fontFamily="@font/fuzzybubbles_bold"
+                android:gravity="center"
+                android:hint="Enter your name"
+                android:padding="16dp"
+                android:textColor="@color/primary_dark_blue"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_playtime" />
 
-    </RadioGroup>
+            <TextView
+                android:id="@+id/tv_difficulty_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/fuzzybubbles_bold"
+                android:text="Choose Difficulty"
+                android:textColor="@color/title_purple"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_player_name" />
+
+            <RadioGroup
+                android:id="@+id/rd_radio_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_difficulty_label">
+
+                <RadioButton
+                    android:id="@+id/easy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_easy"
+                    android:button="@null"
+                    android:elevation="4dp"
+                    android:fontFamily="@font/fuzzybubbles_bold"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="@string/easy"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+                <RadioButton
+                    android:id="@+id/medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_medium"
+                    android:button="@null"
+                    android:elevation="4dp"
+                    android:fontFamily="@font/fuzzybubbles_bold"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="@string/medium"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+                <RadioButton
+                    android:id="@+id/hard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/bg_hard"
+                    android:button="@null"
+                    android:elevation="4dp"
+                    android:fontFamily="@font/fuzzybubbles_bold"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="@string/hard"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/ll_bottom_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/rd_radio_group">
+
+                <Button
+                    android:id="@+id/btn_history"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/kid_button_bg"
+                    android:backgroundTint="@color/soft_purple"
+                    android:fontFamily="@font/fuzzybubbles_bold"
+                    android:text="History"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/btn_quit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/kid_button_bg"
+                    android:backgroundTint="#D32F2F"
+                    android:fontFamily="@font/fuzzybubbles_bold"
+                    android:text="Quit"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +30,7 @@ public class Play extends AppCompatActivity {
 
     String currentQuestion;
     double currentAnswer;
+    String playerName;
 
     ArrayList<String> questionsList = new ArrayList<>();
     ArrayList<String> answersList = new ArrayList<>();
@@ -48,6 +48,9 @@ public class Play extends AppCompatActivity {
             return insets;
         });
 
+        playerName = getIntent().getStringExtra("PLAYER_NAME");
+        if (playerName == null) playerName = "Player";
+
         tvCalculation = findViewById(R.id.tvcalculation);
         input = findViewById(R.id.input);
         displayCard = findViewById(R.id.display_card);
@@ -64,6 +67,7 @@ public class Play extends AppCompatActivity {
         setNumberClick(R.id.nine, "9");
         setNumberClick(R.id.point, ".");
 
+        findViewById(R.id.clear_btn).setOnClickListener(v -> input.setText(""));
         findViewById(R.id.submit).setOnClickListener(v -> checkAnswer());
         findViewById(R.id.back_btn).setOnClickListener(v -> finish());
 
@@ -88,7 +92,7 @@ public class Play extends AppCompatActivity {
     private void checkAnswer() {
         String userText = input.getText().toString();
         if (userText.isEmpty()) {
-            Toast.makeText(this, "Enter an answer!", Toast.LENGTH_SHORT).show();
+            ToastHelper.showCustomToast(this, "Enter an answer!", R.drawable.fun_3d_cartoon_teenage_boy);
             return;
         }
 
@@ -96,7 +100,7 @@ public class Play extends AppCompatActivity {
         try {
             userAnswer = Double.parseDouble(userText);
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Invalid number!", Toast.LENGTH_SHORT).show();
+            ToastHelper.showCustomToast(this, "Invalid number!", R.drawable.fun_3d_cartoon_teenage_boy);
             return;
         }
 
@@ -106,15 +110,15 @@ public class Play extends AppCompatActivity {
 
         if (Math.abs(userAnswer - currentAnswer) < 0.01) {
             score++;
-            playSound(R.raw.levelup_sound); // Play "Success" sound
+            playSound(R.raw.success);
             Animation bounce = AnimationUtils.loadAnimation(this, R.anim.bounce);
             displayCard.startAnimation(bounce);
-            Toast.makeText(this, "Awesome! Correct!", Toast.LENGTH_SHORT).show();
+            ToastHelper.showCustomToast(this, "Awesome, " + playerName + "! Correct!", R.drawable.fun_3d_cartoon_teenage_boy);
         } else {
-            playSound(R.raw.wrong_sound); // Play "Wrong" sound
+            playSound(R.raw.failure);
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
             displayCard.startAnimation(shake);
-            Toast.makeText(this, "Oops! The answer was " + currentAnswer, Toast.LENGTH_SHORT).show();
+            ToastHelper.showCustomToast(this, "Oops! The answer was " + currentAnswer, R.drawable.fun_3d_cartoon_teenage_boy);
         }
 
         questionCount++;
@@ -160,6 +164,7 @@ public class Play extends AppCompatActivity {
         Intent intent = new Intent(this, Results.class);
         intent.putExtra("SCORE", score);
         intent.putExtra("TOTAL", totalQuestions);
+        intent.putExtra("PLAYER_NAME", playerName);
         intent.putStringArrayListExtra("QUESTIONS", questionsList);
         intent.putStringArrayListExtra("ANSWERS", answersList);
         intent.putStringArrayListExtra("USER_ANSWERS", userAnswersList);
