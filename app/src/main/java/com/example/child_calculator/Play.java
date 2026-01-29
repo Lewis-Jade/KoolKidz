@@ -1,13 +1,19 @@
 package com.example.child_calculator;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -24,6 +30,7 @@ public class Play extends AppCompatActivity {
     TextView tvCalculation, tvDifficultyDisplay, tvQuestionCounter;
     EditText input;
     View displayCard;
+    FrameLayout balloonContainer;
 
     int questionCount = 0;
     int totalQuestions = 10;
@@ -60,6 +67,7 @@ public class Play extends AppCompatActivity {
         tvQuestionCounter = findViewById(R.id.tv_question_counter);
         input = findViewById(R.id.input);
         displayCard = findViewById(R.id.display_card);
+        balloonContainer = findViewById(R.id.balloon_container);
 
         // Set difficulty text, color and total questions
         tvDifficultyDisplay.setText(mode);
@@ -89,6 +97,7 @@ public class Play extends AppCompatActivity {
         setNumberClick(R.id.eight, "8");
         setNumberClick(R.id.nine, "9");
         setNumberClick(R.id.point, ".");
+        setNumberClick(R.id.minus_btn, "-");
 
         findViewById(R.id.clear_btn).setOnClickListener(v -> input.setText(""));
         findViewById(R.id.submit).setOnClickListener(v -> checkAnswer());
@@ -100,7 +109,17 @@ public class Play extends AppCompatActivity {
     private void setNumberClick(int id, String value) {
         View btn = findViewById(id);
         if (btn != null) {
-            btn.setOnClickListener(v -> input.append(value));
+            btn.setOnClickListener(v -> {
+                String currentText = input.getText().toString();
+                // Basic logic to prevent multiple minus signs or misplaced signs
+                if (value.equals("-")) {
+                    if (currentText.isEmpty()) {
+                        input.append(value);
+                    }
+                } else {
+                    input.append(value);
+                }
+            });
         }
     }
 
@@ -136,6 +155,7 @@ public class Play extends AppCompatActivity {
             playSound(R.raw.success);
             Animation bounce = AnimationUtils.loadAnimation(this, R.anim.bounce);
             displayCard.startAnimation(bounce);
+            startBalloonAnimation();
             ToastHelper.showCustomToast(this, "Awesome, " + playerName + "! Correct!", R.drawable.fun_3d_cartoon_teenage_boy);
         } else {
             playSound(R.raw.failure);
@@ -153,6 +173,44 @@ public class Play extends AppCompatActivity {
         input.setText("");
     }
 
+    private void startBalloonAnimation() {
+        if (balloonContainer == null) return;
+        Random rand = new Random();
+        int balloonCount = 5 + rand.nextInt(6); // 5 to 10 balloons
+
+        for (int i = 0; i < balloonCount; i++) {
+            final ImageView balloon = new ImageView(this);
+            balloon.setImageResource(R.drawable.balloon);
+            
+            // Randomize color
+            int color = Color.argb(255, rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
+            balloon.setColorFilter(color);
+
+            int size = 100 + rand.nextInt(100);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(size, size);
+            balloon.setLayoutParams(params);
+
+            balloonContainer.addView(balloon);
+
+            // Random horizontal position
+            int screenWidth = getResources().getDisplayMetrics().widthPixels;
+            balloon.setX(rand.nextInt(screenWidth - size));
+            balloon.setY(getResources().getDisplayMetrics().heightPixels);
+
+            // Animation: float up
+            ObjectAnimator animator = ObjectAnimator.ofFloat(balloon, "translationY", -size - 200);
+            animator.setDuration(2000 + rand.nextInt(2000));
+            animator.setInterpolator(new AccelerateInterpolator());
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    balloonContainer.removeView(balloon);
+                }
+            });
+            animator.start();
+        }
+    }
+
     private void nextQuestion() {
         Random rand = new Random();
         int a, b, c;
@@ -164,7 +222,7 @@ public class Play extends AppCompatActivity {
                 a = rand.nextInt(20) + 1;
                 b = rand.nextInt(15) + 1;
                 c = rand.nextInt(10) + 1;
-                opType1 = rand.nextInt(2); // + or - for simplicity in chaining
+                opType1 = rand.nextInt(2); // + or -
                 opType2 = rand.nextInt(2);
                 
                 String sOp1 = (opType1 == 0) ? " + " : " - ";
@@ -176,7 +234,6 @@ public class Play extends AppCompatActivity {
                 break;
                 
             case "MEDIUM":
-                // Slightly harder numbers for Medium mode
                 a = rand.nextInt(25) + 5;
                 b = rand.nextInt(20) + 5;
                 opType1 = rand.nextInt(4);
@@ -186,7 +243,7 @@ public class Play extends AppCompatActivity {
             default: // EASY
                 a = rand.nextInt(10) + 1;
                 b = rand.nextInt(10) + 1;
-                opType1 = rand.nextInt(2); // Only + and - for Easy
+                opType1 = rand.nextInt(2);
                 generateTwoOperandQuestion(a, b, opType1);
                 break;
         }
@@ -194,11 +251,29 @@ public class Play extends AppCompatActivity {
         tvCalculation.setText(currentQuestion + " =");
         tvQuestionCounter.setText("Question: " + (questionCount + 1) + " / " + totalQuestions);
         
-        // Randomly trigger a small "engaging" animation on the whole screen background elements
-        if (rand.nextBoolean()) {
-            Animation pulse = AnimationUtils.loadAnimation(this, R.anim.bounce); // Using bounce as a pulse
-            pulse.setDuration(1000);
-            tvDifficultyDisplay.startAnimation(pulse);
+        triggerRandomAnimation();
+    }
+
+    private void triggerRandomAnimation() {
+        Random rand = new Random();
+        int choice = rand.nextInt(3);
+        Animation anim;
+
+        switch (choice) {
+            case 0:
+                anim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+                tvDifficultyDisplay.startAnimation(anim);
+                break;
+            case 1:
+                anim = AnimationUtils.loadAnimation(this, R.anim.shake);
+                tvQuestionCounter.startAnimation(anim);
+                break;
+            case 2:
+                // Small pulse for the display card
+                displayCard.animate().scaleX(1.05f).scaleY(1.05f).setDuration(200).withEndAction(() -> 
+                    displayCard.animate().scaleX(1.0f).scaleY(1.0f).setDuration(200).start()
+                ).start();
+                break;
         }
     }
 
@@ -209,7 +284,7 @@ public class Play extends AppCompatActivity {
                 currentAnswer = a + b;
                 break;
             case 1:
-                if (a < b) { int temp = a; a = b; b = temp; }
+                if (a < b && !mode.equals("HARD")) { int temp = a; a = b; b = temp; }
                 currentQuestion = a + " - " + b;
                 currentAnswer = a - b;
                 break;

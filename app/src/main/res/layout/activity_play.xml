@@ -89,112 +89,76 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Simplified Number Keypad -->
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/grid_layout"
+    <!-- Number Keypad using LinearLayout for better control -->
+    <LinearLayout
+        android:id="@+id/keypad_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="12dp"
         android:layout_marginVertical="8dp"
-        app:columnCount="3"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/bottom_actions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/display_card"
-        app:rowCount="5">
+        app:layout_constraintTop_toBottomOf="@+id/display_card">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <android.widget.Button android:id="@+id/seven" style="@style/CalcButtonStyle" android:layout_height="match_parent" android:text="@string/seven" android:layout_weight="1" />
+            <android.widget.Button android:id="@+id/eight" style="@style/CalcButtonStyle" android:layout_height="match_parent" android:text="@string/eight" android:layout_weight="1" />
+            <android.widget.Button android:id="@+id/nine" style="@style/CalcButtonStyle" android:layout_height="match_parent" android:text="@string/nine" android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <android.widget.Button android:id="@+id/four" style="@style/CalcButtonStyle" android:layout_height="match_parent" android:text="@string/four" android:layout_weight="1" />
+            <android.widget.Button android:id="@+id/five" style="@style/CalcButtonStyle" android:layout_height="match_parent" android:text="@string/five" android:layout_weight="1" />
+            <android.widget.Button android:id="@+id/six" style="@style/CalcButtonStyle" android:layout_height="match_parent" android:text="@string/six" android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <android.widget.Button android:id="@+id/one" style="@style/CalcButtonStyle" android:layout_height="match_parent" android:text="@string/one" android:layout_weight="1" />
+            <android.widget.Button android:id="@+id/two" style="@style/CalcButtonStyle" android:layout_height="match_parent" android:text="@string/two" android:layout_weight="1" />
+            <android.widget.Button android:id="@+id/three" style="@style/CalcButtonStyle" android:text="@string/three" android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <android.widget.Button android:id="@+id/zero" style="@style/CalcButtonStyle" android:layout_height="match_parent" android:text="@string/zero" android:layout_weight="1" />
+            <android.widget.Button android:id="@+id/point" style="@style/CalcButtonStyle" android:layout_height="match_parent" android:text="@string/point" android:layout_weight="1" />
+            <android.widget.Button android:id="@+id/clear_btn" style="@style/CalcButtonStyle" android:layout_height="match_parent" android:backgroundTint="#FF9800" android:text="C" android:layout_weight="1" />
+        </LinearLayout>
 
         <android.widget.Button
-            android:id="@+id/seven"
+            android:id="@+id/minus_btn"
             style="@style/CalcButtonStyle"
-            android:text="@string/seven"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1" />
-
-        <android.widget.Button
-            android:id="@+id/eight"
-            style="@style/CalcButtonStyle"
-            android:text="@string/eight"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1" />
-
-        <android.widget.Button
-            android:id="@+id/nine"
-            style="@style/CalcButtonStyle"
-            android:text="@string/nine"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1" />
-
-        <android.widget.Button
-            android:id="@+id/four"
-            style="@style/CalcButtonStyle"
-            android:text="@string/four"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1" />
-
-        <android.widget.Button
-            android:id="@+id/five"
-            style="@style/CalcButtonStyle"
-            android:text="@string/five"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1" />
-
-        <android.widget.Button
-            android:id="@+id/six"
-            style="@style/CalcButtonStyle"
-            android:text="@string/six"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1" />
-
-        <android.widget.Button
-            android:id="@+id/one"
-            style="@style/CalcButtonStyle"
-            android:text="@string/one"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1" />
-
-        <android.widget.Button
-            android:id="@+id/two"
-            style="@style/CalcButtonStyle"
-            android:text="@string/two"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1" />
-
-        <android.widget.Button
-            android:id="@+id/three"
-            style="@style/CalcButtonStyle"
-            android:text="@string/three"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1" />
-
-        <android.widget.Button
-            android:id="@+id/zero"
-            style="@style/CalcButtonStyle"
-            android:text="@string/zero"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1" />
-
-        <android.widget.Button
-            android:id="@+id/point"
-            style="@style/CalcButtonStyle"
-            android:text="@string/point"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1" />
-
-        <android.widget.Button
-            android:id="@+id/clear_btn"
-            style="@style/CalcButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:backgroundTint="#FF9800"
-            android:text="C"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1" />
+            android:text="-" />
 
-    </androidx.gridlayout.widget.GridLayout>
+    </LinearLayout>
 
     <!-- Bottom Actions -->
     <LinearLayout
         android:id="@+id/bottom_actions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal"
         android:padding="16dp"
         app:layout_constraintBottom_toTopOf="@+id/tv_footer">
@@ -240,5 +204,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Balloon Overlay Container -->
+    <FrameLayout
+        android:id="@+id/balloon_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="10dp"
+        android:clipChildren="false"
+        android:clipToPadding="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
