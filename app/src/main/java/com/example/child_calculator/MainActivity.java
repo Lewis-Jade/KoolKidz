@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     RadioGroup radioGroup;
     Button btnQuit, btnHistory;
+    ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +39,13 @@ public class MainActivity extends AppCompatActivity {
         radioGroup = findViewById(R.id.rd_radio_group);
         btnQuit = findViewById(R.id.btn_quit);
         btnHistory = findViewById(R.id.btn_history);
+        scrollView = findViewById(R.id.main_scroll_view);
 
-        // Use click listeners on buttons instead of checked change listener to avoid re-triggering issues
+        // Ensure ScrollView starts at the top
+        if (scrollView != null) {
+            scrollView.post(() -> scrollView.fullScroll(View.FOCUS_UP));
+        }
+
         setupDifficultyButton(R.id.easy);
         setupDifficultyButton(R.id.medium);
         setupDifficultyButton(R.id.hard);
@@ -47,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnQuit.setOnClickListener(v -> {
-            MusicManager.stopMusic();
+            try {
+                Class.forName("com.example.child_calculator.MusicManager");
+                MusicManager.stopMusic();
+            } catch (ClassNotFoundException ignored) {}
+            
             finishAffinity();
             System.exit(0);
         });
@@ -58,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         if (rb != null) {
             rb.setOnClickListener(v -> {
                 showNamePrompt(id);
-                // Temporarily uncheck so it doesn't look stuck
                 radioGroup.clearCheck();
             });
         }
@@ -77,7 +88,22 @@ public class MainActivity extends AppCompatActivity {
         
         btnStart.setOnClickListener(v -> {
             String playerName = etName.getText().toString().trim();
-            if (playerName.isEmpty()) playerName = "Hero";
+            
+            // Rules:
+            // 1. Cannot be empty
+            // 2. Must be at least 2 characters
+            // 3. No weird symbols (optional, but let's keep it simple)
+            
+            if (playerName.isEmpty()) {
+                etName.setError("Please enter your name!");
+                Toast.makeText(this, "We need to know who is playing!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            
+            if (playerName.length() < 2) {
+                etName.setError("Name is too short!");
+                return;
+            }
 
             String mode = "";
             if (difficultyId == R.id.easy) mode = "EASY";
