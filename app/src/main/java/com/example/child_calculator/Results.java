@@ -32,6 +32,7 @@ public class Results extends AppCompatActivity {
     private String playerName;
     private int score;
     private int total;
+    private String mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class Results extends AppCompatActivity {
         score = intent.getIntExtra("SCORE", 0);
         total = intent.getIntExtra("TOTAL", 10);
         playerName = intent.getStringExtra("PLAYER_NAME");
+        mode = intent.getStringExtra("MODE");
         ArrayList<String> questions = intent.getStringArrayListExtra("QUESTIONS");
         ArrayList<String> correctAnswers = intent.getStringArrayListExtra("ANSWERS");
         ArrayList<String> userAnswers = intent.getStringArrayListExtra("USER_ANSWERS");
@@ -109,6 +111,7 @@ public class Results extends AppCompatActivity {
         findViewById(R.id.back).setOnClickListener(v -> {
             Intent playIntent = new Intent(Results.this, Play.class);
             playIntent.putExtra("PLAYER_NAME", playerName);
+            playIntent.putExtra("MODE", mode);
             startActivity(playIntent);
             finish();
         });
@@ -120,7 +123,8 @@ public class Results extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences("KidzCalculatorPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         String key = "history_" + System.currentTimeMillis();
-        String result = playerName + " | Score: " + score + "/" + total;
+        // Saving format: Name | Score/Total | Mode
+        String result = playerName + " | " + score + "/" + total + " | " + mode;
         editor.putString(key, result);
         editor.apply();
     }
@@ -138,10 +142,8 @@ public class Results extends AppCompatActivity {
             final ImageView balloon = new ImageView(this);
             balloon.setImageResource(R.drawable.balloon);
             
-            // Set translationZ to bring to front
             balloon.setTranslationZ(100f);
             
-            // Random colors for balloons
             float[] hsv = {random.nextInt(360), 0.6f, 0.9f};
             balloon.setColorFilter(Color.HSVToColor(hsv));
             
@@ -161,7 +163,6 @@ public class Results extends AppCompatActivity {
             rise.setDuration(duration);
             rise.setStartDelay(delay);
             
-            // Add a little side-to-side drift
             ObjectAnimator drift = ObjectAnimator.ofFloat(balloon, "translationX", 
                 balloon.getX(), balloon.getX() + (random.nextInt(300) - 150));
             drift.setDuration(duration);

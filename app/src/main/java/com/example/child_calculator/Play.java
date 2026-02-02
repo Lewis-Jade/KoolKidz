@@ -305,6 +305,7 @@ public class Play extends AppCompatActivity {
         intent.putExtra("SCORE", score);
         intent.putExtra("TOTAL", totalQuestions);
         intent.putExtra("PLAYER_NAME", playerName);
+        intent.putExtra("MODE", mode);
         intent.putStringArrayListExtra("QUESTIONS", questionsList);
         intent.putStringArrayListExtra("ANSWERS", answersList);
         intent.putStringArrayListExtra("USER_ANSWERS", userAnswersList);
